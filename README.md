@@ -32,6 +32,6 @@ MoneySpendCalculator - це мобільний додаток на Android дл�
 
 </ol>
 
-<img src="show1.jpg" width="1080" height="1920"/>
-<img src="show2.jpg" width="1080" height="1920"/>
-<img src="show3.jpg" width="1080" height="1920"/>
+<img src="show1.jpg" width="360" height="640"/>
+<img src="show2.jpg" width="360" height="640"/>
+<img src="show3.jpg" width="360" height="640"/>
