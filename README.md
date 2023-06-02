@@ -1,5 +1,4 @@
 # MoneySpendCalculator
-<h1>MoneySpendCalculator</h1>
 
 <p><h2>Розробив:</h2> Гаврилюк Владислав АІ-214</p>
 
