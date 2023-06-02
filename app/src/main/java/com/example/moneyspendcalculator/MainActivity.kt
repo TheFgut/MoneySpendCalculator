@@ -7,6 +7,7 @@ import android.widget.ImageView
 import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
 import com.example.moneyspendcalculator.ObserverPattern.Observer
+import com.example.moneyspendcalculator.autintification.Authentification
 import com.example.moneyspendcalculator.data_manage.data_manager
 
 
@@ -31,6 +32,7 @@ public class MainActivity: AppCompatActivity(), Observer {
             findViewById<TextView>(R.id.prevMounthComparedRevenueText)
 
         update();
+
     }
 
     fun goToAddNewBalanceChangeSetting(view: View?) {
@@ -46,6 +48,7 @@ public class MainActivity: AppCompatActivity(), Observer {
     override fun onDestroy() {
         data_manager.Destroy();
         super.onDestroy()
+        Authentification.controller.SignOut()
     }
 
     public fun updateInfo(mounthRevenue: Float, prevMounthRevenue:Float) {

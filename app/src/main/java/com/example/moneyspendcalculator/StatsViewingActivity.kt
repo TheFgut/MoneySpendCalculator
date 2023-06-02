@@ -29,7 +29,8 @@ class StatsViewingActivity : AppCompatActivity() {
 
         val  out = arrayOf<moneyOutcome>();
 
-        showAndSortData(data_manager.manager.incomeInfo.toTypedArray(),
+        showAndSortData(
+            data_manager.manager.incomeInfo.toTypedArray(),
             data_manager.manager.outcomeInfo.toTypedArray())
 
         val button = findViewById<Button>(R.id.buttonBackFromStatsView)

@@ -1,3 +1,19 @@
 <resources>
     <string name="app_name">MoneySpendCalculator</string>
+    <string name="title_activity_login">LoginActivity</string>
+    <string name="prompt_email">Email</string>
+    <string name="prompt_password">Password</string>
+    <string name="action_sign_in">Sign in or register</string>
+    <string name="action_sign_in_short">Sign in</string>
+    <string name="welcome">"Welcome !"</string>
+    <string name="invalid_username">Not a valid username</string>
+    <string name="invalid_password">Password must be >5 characters</string>
+    <string name="login_failed">"Login failed"</string>
+    <string name="getAccText"><font color="#000000">Don\'t have an account?</font>
+        <font color="#00ff00">Make one!</font></string>
+    <string name="return_to_login">Return to login</string>
+    <string name="register">Register</string>
+    <string name="password">Password</string>
+
+
 </resources>
