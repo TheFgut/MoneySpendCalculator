@@ -30,8 +30,8 @@ class StatsViewingActivity : AppCompatActivity() {
         val  out = arrayOf<moneyOutcome>();
 
         showAndSortData(
-            data_manager.manager.incomeInfo.toTypedArray(),
-            data_manager.manager.outcomeInfo.toTypedArray())
+            data_manager.manager?.incomeInfo!!.toTypedArray(),
+            data_manager.manager?.outcomeInfo!!.toTypedArray())
 
         val button = findViewById<Button>(R.id.buttonBackFromStatsView)
         button.setOnClickListener {
@@ -63,7 +63,7 @@ finish()
             else{
                 var incomeDate = income[incomeNum].date
                 var outcomeDate = outcome[outcomeNum].date
-                if(MyDate.isBigger(incomeDate,outcomeDate)){
+                if(MyDate.isBigger(incomeDate!!,outcomeDate!!)){
                     addMoneyIncomeDisplay(income[incomeNum])
                     incomeNum++
 
@@ -78,12 +78,12 @@ finish()
 
     private fun addMoneyIncomeDisplay(income: moneyIncome) {
         val iconId = IconsStorage.getIncomeIconByType(income.type)
-        createDisplay(iconId, income.value, income.date, income.type.name)
+        createDisplay(iconId, income.value, income.date!!, income.type!!.name)
     }
 
     private fun addMoneyOutcomeDisplay(outcome: moneyOutcome) {
         val iconId = IconsStorage.getOutcomeIconByType(outcome.type)
-        createDisplay(iconId, outcome.value, outcome.date, outcome.type.name)
+        createDisplay(iconId, outcome.value, outcome.date!!, outcome.type!!.name)
     }
 
     private fun createDisplay(iconId : Int, price: Float, date: MyDate, purpose: String ){

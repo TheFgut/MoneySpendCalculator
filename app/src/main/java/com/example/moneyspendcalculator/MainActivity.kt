@@ -21,7 +21,7 @@ public class MainActivity: AppCompatActivity(), Observer {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
         data_manager.Init(this);
-        data_manager.manager.changedEvent.addObserver(this)
+        data_manager.manager?.changedEvent?.addObserver(this)
 
         mounthMoneyStatusImage = findViewById<ImageView>(R.id.mounthMoneyStatusImageView)
         mounthRevenueTextDisp = findViewById<TextView>(R.id.mounthRevenueText)
@@ -76,8 +76,8 @@ public class MainActivity: AppCompatActivity(), Observer {
     }
 
     override fun update() {
-        var thisMonth: Float = data_manager.manager.thisMonthRevenue;
-        var prevMonth: Float = data_manager.manager.prevMonthRevenue;
+        var thisMonth: Float = data_manager.manager!!.thisMonthRevenue;
+        var prevMonth: Float = data_manager.manager!!.prevMonthRevenue;
         updateInfo(thisMonth, prevMonth)
     }
 }

@@ -1,140 +1,125 @@
-package com.example.moneyspendcalculator.data_manage;
+package com.example.moneyspendcalculator.data_manage
 
-import android.content.Context;
+import android.content.Context
+import com.example.moneyspendcalculator.ObserverPattern.Observerable
+import com.example.moneyspendcalculator.data_manage.moneyIncome
+import com.example.moneyspendcalculator.data_manage.moneyOutcome
+import java.time.LocalDate
 
-import com.example.moneyspendcalculator.ObserverPattern.Observerable;
-
-import java.sql.Time;
-import java.time.LocalDate;
-import java.util.ArrayList;
-
-
-public class data_manager {
-
-
-    public Observerable changedEvent = new Observerable();
-    //constructor
-    public data_manager(Context context){
-        moneyOutcomeLoaderAndSaver =
-                new DataLoaderAndSaver<moneyOutcome>(outcomeInfoSvaFileName,moneyOutcome.class
-                        , context);
-        moneyIncomeLoaderAndSaver =
-                new DataLoaderAndSaver<moneyIncome>(incomeInfoSvaFileName,moneyIncome.class,
-                        context);
+class data_manager(context: Context?) {
+    var changedEvent = Observerable()
+    private fun AddIncomeLocally(income: moneyIncome) {
+        incomeInfo!!.add(income)
+        changedEvent.Invoke()
     }
 
-    public static data_manager manager;
-
-    //on start init
-    public static void Init(Context context){
-        manager = new data_manager(context);
-
-        manager.LoadData();
+    private fun AddOutcomeLocally(outcome: moneyOutcome) {
+        outcomeInfo!!.add(outcome)
+        changedEvent.Invoke()
     }
 
-    public static void AddIncome(moneyIncome income){
-        if(manager == null) {
-            throw  new NullPointerException("data_manager instance is not created");
-        }
-        manager.AddIncomeLocally(income);
-
-    }
-
-    private void AddIncomeLocally(moneyIncome income){
-        incomeInfo.add(income);
-        changedEvent.Invoke();
-    }
-
-    public static void AddOutcome(moneyOutcome outcome){
-        if(manager == null) {
-            throw  new NullPointerException("data_manager instance is not created");
-        }
-        manager.AddOutcomeLocally(outcome);
-    }
-
-    private void AddOutcomeLocally(moneyOutcome outcome){
-        outcomeInfo.add(outcome);
-        changedEvent.Invoke();
-    }
-
-    public Float getThisMonthRevenue(){
-        LocalDate currentDate = LocalDate.now();
-        int month = currentDate.getMonthValue();
-        int year = currentDate.getYear();
-
-        float value = 0;
-        for(moneyOutcome out : outcomeInfo){
-            if(out.getDate().getMonth() == month && out.getDate().getYear() == year){
-                value = out.getValue();
+    val thisMonthRevenue: Float
+        get() {
+            val currentDate = LocalDate.now()
+            val month = currentDate.monthValue
+            val year = currentDate.year
+            var value = 0f
+            for (out in outcomeInfo!!) {
+                if (out.date!!.month == month && out.date.year == year) {
+                    value = out.value
+                }
             }
-        }
-        for(moneyIncome in : incomeInfo){
-            if(in.getDate().getMonth() == month&& in.getDate().getYear() == year){
-                value += in.getValue();
+            for (`in` in incomeInfo!!) {
+                if (`in`.date!!.month == month && `in`.date.year == year) {
+                    value += `in`.value
+                }
             }
+            return value
         }
-
-        return  value;
-    }
-
-    public Float getPrevMonthRevenue(){
-        LocalDate currentDate = LocalDate.now();
-        int month = currentDate.getMonthValue() - 1;
-        int year = currentDate.getYear();
-        if(month < 0){
-            month = 12;
-            year--;
-        }
-
-        float value = 0;
-        for(moneyOutcome out : outcomeInfo){
-            if(out.getDate().getMonth() == month && out.getDate().getYear() == year){
-                value += out.getValue();
+    val prevMonthRevenue: Float
+        get() {
+            val currentDate = LocalDate.now()
+            var month = currentDate.monthValue - 1
+            var year = currentDate.year
+            if (month < 0) {
+                month = 12
+                year--
             }
-        }
-        for(moneyIncome in : incomeInfo){
-            if(in.getDate().getMonth() == month && in.getDate().getYear() == year){
-                value += in.getValue();
+            var value = 0f
+            for (out in outcomeInfo!!) {
+                if (out.date!!.month == month && out.date.year == year) {
+                    value += out.value
+                }
             }
+            for (`in` in incomeInfo!!) {
+                if (`in`.date!!.month == month && `in`.date.year == year) {
+                    value += `in`.value
+                }
+            }
+            return value
         }
-
-        return  value;
-    }
-
-    public static void Destroy(){
-
-        manager.SaveData();
-    }
-
-
-
-
-
-    public ArrayList<moneyOutcome> outcomeInfo;
-    public ArrayList<moneyIncome> incomeInfo;
+    var outcomeInfo: ArrayList<moneyOutcome>? = null
+    var incomeInfo: ArrayList<moneyIncome>? = null
 
     ///loading and saving
+    private val moneyOutcomeLoaderAndSaver: DataLoaderAndSaver<moneyOutcome>
+    private val moneyIncomeLoaderAndSaver: DataLoaderAndSaver<moneyIncome>
 
-    private DataLoaderAndSaver<moneyOutcome> moneyOutcomeLoaderAndSaver;
-    private DataLoaderAndSaver<moneyIncome> moneyIncomeLoaderAndSaver;
-    private static final String outcomeInfoSvaFileName = "outcomeData";
-    private static final String incomeInfoSvaFileName = "incomeData";
-    private void LoadData(){
+    //constructor
+    init {
+        moneyOutcomeLoaderAndSaver = DataLoaderAndSaver(
+            outcomeInfoSvaFileName, moneyOutcome::class.java, context!!
+        )
+        moneyIncomeLoaderAndSaver = DataLoaderAndSaver(
+            incomeInfoSvaFileName, moneyIncome::class.java,
+            context
+        )
+    }
 
-        outcomeInfo = moneyOutcomeLoaderAndSaver.LoadData();
-        if(outcomeInfo == null){
-            outcomeInfo = new ArrayList<>();
+    private fun LoadData() {
+        outcomeInfo = moneyOutcomeLoaderAndSaver.LoadData()
+        if (outcomeInfo == null) {
+            outcomeInfo = ArrayList()
         }
-        incomeInfo = moneyIncomeLoaderAndSaver.LoadData();
-        if(incomeInfo == null){
-            incomeInfo = new ArrayList<>();
+        incomeInfo = moneyIncomeLoaderAndSaver.LoadData()
+        if (incomeInfo == null) {
+            incomeInfo = ArrayList()
         }
     }
 
-    private void SaveData(){
-        moneyOutcomeLoaderAndSaver.SaveData(outcomeInfo.toArray(new moneyOutcome[0]));
-        moneyIncomeLoaderAndSaver.SaveData(incomeInfo.toArray(new moneyIncome[0]));
+    private fun SaveData() {
+        moneyOutcomeLoaderAndSaver.SaveData(outcomeInfo!!.toTypedArray())
+        moneyIncomeLoaderAndSaver.SaveData(incomeInfo!!.toTypedArray())
+    }
 
+    companion object {
+        var manager: data_manager? = null
 
+        //on start init
+        fun Init(context: Context?) {
+            manager = data_manager(context)
+            manager!!.LoadData()
+        }
+
+        fun AddIncome(income: moneyIncome) {
+            if (manager == null) {
+                throw NullPointerException("data_manager instance is not created")
+            }
+            manager!!.AddIncomeLocally(income)
+        }
+
+        fun AddOutcome(outcome: moneyOutcome) {
+            if (manager == null) {
+                throw NullPointerException("data_manager instance is not created")
+            }
+            manager!!.AddOutcomeLocally(outcome)
+        }
+
+        fun Destroy() {
+            manager!!.SaveData()
+        }
+
+        private const val outcomeInfoSvaFileName = "outcomeData"
+        private const val incomeInfoSvaFileName = "incomeData"
     }
 }
