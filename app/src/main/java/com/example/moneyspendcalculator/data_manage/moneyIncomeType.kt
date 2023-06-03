@@ -1,8 +1,5 @@
-package com.example.moneyspendcalculator.data_manage;
+package com.example.moneyspendcalculator.data_manage
 
-public enum moneyIncomeType {
-    salary,
-    business,
-    sell,
-    other
+enum class moneyIncomeType {
+    salary, business, sell, other
 }

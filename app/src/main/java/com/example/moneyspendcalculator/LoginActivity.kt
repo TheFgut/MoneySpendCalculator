@@ -100,8 +100,9 @@ class LoginActivity : AppCompatActivity() {
                 if (task.isSuccessful) {
 
                     val user = FirebaseAuth.getInstance().currentUser
-
                     finish()
+                    val intent = Intent(this, MainActivity::class.java)
+                    startActivity(intent)
                 } else {
                     val exception = task.exception
                     Toast.makeText(

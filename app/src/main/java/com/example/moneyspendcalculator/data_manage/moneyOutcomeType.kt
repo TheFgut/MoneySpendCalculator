@@ -1,6 +1,6 @@
-package com.example.moneyspendcalculator.data_manage;
+package com.example.moneyspendcalculator.data_manage
 
-public enum moneyOutcomeType{
+enum class moneyOutcomeType {
     Food,
     Housing_and_utilities,
     Transport,

@@ -135,7 +135,7 @@ finish()
         // Finally, add the CardView in root layout
         var linearLayout = generateLinearLayout()
         linearLayout.addView(imageView)
-        linearLayout.addView(generateTextView(date.getDateString()))
+        linearLayout.addView(generateTextView(date.dateString))
 
         var colorOfPrice = getColor(R.color.black)
         if(price < 0){

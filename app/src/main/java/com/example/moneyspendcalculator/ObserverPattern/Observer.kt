@@ -1,5 +1,5 @@
-package com.example.moneyspendcalculator.ObserverPattern;
+package com.example.moneyspendcalculator.ObserverPattern
 
-public interface Observer {
-    public void update();
+interface Observer {
+    fun update()
 }
